@@ -2,33 +2,22 @@ package com.project.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "notifications")
-public class Notification {
+@Table(name="users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String message;
+    private String name;
 
-    private boolean isRead;
+    @Column(unique = true)
+    private String email;
 
-    private LocalDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    // auto set time before saving
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.isRead = false;
-    }
+    private String role;
 }

@@ -1,14 +1,10 @@
 package com.project.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class NotificationResponseDto {
+public class UserRequestDto {
 
-    private Long id;
-    private String message;
-    private boolean isRead;
-    private String createdAt;
+    private String name;
+    private String email;
+    private String role;
 }

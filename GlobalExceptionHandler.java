@@ -5,40 +5,46 @@ import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.dto.NotificationResponseDto;
-import com.project.service.NotificationService;
+import com.project.dto.UserRequestDto;
+import com.project.dto.UserResponseDto;
+import com.project.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class NotificationController {
+public class UserController {
 
-    private final NotificationService notificationService;
+    private final UserService userService;
 
-    @GetMapping("/user/{userId}")
-    public List<NotificationResponseDto> getUserNotifications(
-            @PathVariable Long userId) {
+    @PostMapping
+    public UserResponseDto createUser( @RequestBody UserRequestDto dto) {
 
-        return notificationService.getUserNotifications(userId);
+        return userService.createUser(dto);
     }
 
-    @PutMapping("/{id}/read")
-    public String markAsRead(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public UserResponseDto getUser(@PathVariable Long id) {
 
-        notificationService.markAsRead(id);
-        return "Marked as read";
+        return userService.getUserById(id);
+    }
+
+    @GetMapping
+    public List<UserResponseDto> getAllUsers() {
+
+        return userService.getAllUsers();
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
 
-        notificationService.deleteNotification(id);
-        return "Deleted";
+        userService.deleteUser(id);
+        return "User deleted successfully";
     }
 }
